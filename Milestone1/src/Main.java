@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 
 public class Main {
- LinkedList<String> reservedwords = new LinkedList<String>;
+ LinkedList<String> reservedWords = new LinkedList<String>();
 
 
     public static void main(String[]Args){
@@ -31,27 +31,43 @@ public class Main {
         }
     }
         public static void parsing(String[] parts){
-
-        String[] currString;
-        int i = 0;
-        for(int count = 1; count<parts.length;count++){
-            currString[i]= parts[count];
-        }
         switch (parts[0]) {
                 case "add":
-                    int k = 1;
-                    String addstring= "";
+                    if (parts[1].equals("input") && parts[2].equals("input")) {
+                        add(input(), input());
 
-                        add(parts[1], addstring);
+                    } else if (parts[1].equals("input") && !parts[2].equals("input")) {
+                        String addstring = "";
+                        for (int x = 2; x < parts.length; x++) {
+                            addstring = addstring + " " + parts[x];
+                        }
+                        add(input(), addstring);
+
+                    } else if (!parts[1].equals("input") && parts[2].equals("input")) {
+                        add(parts[1], input());
+                    } else {
+
+                        String addString = "";
+                        for (int x = 2; x < parts.length; x++) {
+                            addString = addString + parts[x];
+                        }
+                        add(parts[1], addString);
+
+
+                    }
                     break;
+
+
+
+
                 case "writeFile":
                     if (parts[1].equals("input") && parts[2].equals("input")) {
                         writeFile(input(), input());
 
                     } else if (parts[1].equals("input") && !parts[2].equals("input")) {
                         String writestring = "";
-                        for (int i = 2; i < parts.length; i++) {
-                            writestring = writestring + " " + parts[i];
+                        for (int x = 2; x < parts.length; x++) {
+                            writestring = writestring + " " + parts[x];
                         }
                         writeFile(input(), writestring);
 
@@ -60,30 +76,67 @@ public class Main {
                     } else {
 
                         String writestring = "";
-                        for (int i = 2; i < parts.length; i++) {
-                            writestring = writestring + parts[i];
+                        for (int x = 2; x < parts.length; x++) {
+                            writestring = writestring + parts[x];
                         }
                         writeFile(parts[1], writestring);
-                        break;
+
 
                     }
+                    break;
+
+
+
+
 
                 case "readFile":
                     if (parts[1].equals("input"))
                         readFile(input());
-                    else
-                        readFile(parts[1]);
-
-                    break;
-                case "assign":
-                    assign(parts[1], parts[2]);
-                    break;
-                case "print":
-                    String printstring = "";
-                    for (int i = 1; i < parts.length; i++) {
-                        printstring = printstring + parts[i];
+                    else {
+                        String readString = "";
+                        for (int x = 2; x < parts.length; x++) {
+                            readString = readString + parts[x];
+                        }
+                        readFile(readString);
+                        break;
                     }
-                    print(printstring);
+
+
+
+                case "assign":
+                    if (parts[1].equals("input") && parts[2].equals("input")) {
+                        assign(input(), input());
+
+                    } else if (parts[1].equals("input") && !parts[2].equals("input")) {
+                        String assignstring = "";
+                        for (int x = 2; x < parts.length; x++) {
+                            assignstring = assignstring + " " + parts[x];
+                        }
+                        assign(input(), assignstring);
+
+                    } else if (!parts[1].equals("input") && parts[2].equals("input")) {
+                        assign(parts[1], input());
+                    } else {
+
+                        String assignstring = "";
+                        for (int x = 2; x < parts.length; x++) {
+                            assignstring = assignstring + parts[x];
+                        }
+                        assign(parts[1], assignstring);
+
+
+                    }
+
+
+
+
+
+                case "print":
+                    String printString = "";
+                    for (int x = 1; x < parts.length; x++) {
+                        printString = printString + parts[x];
+                    }
+                    print(printString);
 
                     break;
 
@@ -94,7 +147,7 @@ public class Main {
 
 
 
-    public static void print(String[] text){
+    public static void print(String text){
     System.out.print("I am print");
     System.out.print(text);
     }
@@ -112,7 +165,7 @@ public class Main {
     }
     // ----------------------------------------------------------
 
-    public static void assign(String[] array){
+    public static void assign(String one, String two){
         System.out.print("I am Assign");
 
 
@@ -128,17 +181,17 @@ public class Main {
     // ----------------------------------------------------------
 
 
-    public static void add(String[] array){
+    public static void add(String first, String second ){
         System.out.print("I am add");
 
     }
 
-    public static void writeFile(String[] array ){
+    public static void writeFile(String write,String fileLocation ){
         System.out.print("I am writeFile");
 
     }
 
-    public static void readFile(String[] filename){
+    public static void readFile(String filename){
         System.out.print("I am readFile");
 
     }
