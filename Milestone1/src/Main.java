@@ -1,15 +1,15 @@
 import java.io.*;
 import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.Hashtable;
 import java.util.Scanner;
 
 
 public class Main {
- LinkedList<String> reservedWords = new LinkedList<String>();
+	static Hashtable<String, String> variables = new Hashtable<String, String>();
 
 
     public static void main(String[]Args){
-            parser("C:\\Users\\Ahmed Hamouda\\Documents\\GitHub\\OSProject\\OSproject\\Milestone1\\Program 1.txt");
+            parser("Program 1.txt");
 
     }
     public static void parser(String filename) {
@@ -175,7 +175,8 @@ public class Main {
 
     public static String input(){
         System.out.println("I am in input");
-        Scanner sc= new Scanner(System.in); //System.in is a standard input stream
+        @SuppressWarnings("resource")
+		Scanner sc= new Scanner(System.in); //System.in is a standard input stream
         String str= sc.nextLine();              //reads string
         return str;
 
@@ -186,12 +187,31 @@ public class Main {
     // ----------------------------------------------------------
 
     public static void assign(String one, String two){
-        System.out.println("I am in Assign");
-        return;
-
-
-
-
+    	String[] arg2 = two.split(" ");
+    	
+		String varName = ""; 
+    	String data = "";
+        if(one.equals("readFile"))
+        {
+        	varName = readFile(arg2[0]);
+        	arg2[0] = "";
+        	two = Arrays.toString(arg2);
+        }
+        else
+        	varName = one;
+        
+        if(two.contains("readFile"))
+        {
+        	arg2 = two.split(" ");
+        	data = readFile(arg2[1]);
+        }
+        else
+        	data = two;
+        
+        if(variables.containsKey(varName))
+        	variables.replace(varName, data);
+        else
+        	variables.put(varName, data);
     }
 
 
@@ -211,9 +231,9 @@ public class Main {
 
     }
 
-    public static void readFile(String filename){
+    public static String readFile(String filename){
         System.out.println("I am in readFile");
-
+        return null; //placeholder for assign
     }
 
     // ----------------------------------------------------------
