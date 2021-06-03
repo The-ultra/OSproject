@@ -1,18 +1,18 @@
 import java.io.*;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Scanner;
 
 
 public class Main {
-	static Hashtable<String, String> variables = new Hashtable<String, String>();
+	static Hashtable<String, Object> variables = new Hashtable<String, Object>();
 	
-	 //static String a = "";
-	 //static String b = "";
+
 	
     public static void main(String[]Args){
-            parser("C:/Users/elaya/java/OSproject/Milestone1/Program 2.txt");
+    		parser("Program 1.txt");
+            parser("Program 2.txt");
+            parser("Program 3.txt");
 
     }
     public static void parser(String filename) {
@@ -140,7 +140,7 @@ public class Main {
 
                     String assignstring = "";
                     for (int x = 2; x < parts.length; x++) {
-                        assignstring = assignstring + parts[x];
+                        assignstring = assignstring+parts[x] +" " ;
                     }
                     assign(parts[1], assignstring);
 
@@ -174,7 +174,6 @@ public class Main {
 
 
     public static String input(){
-        System.out.println("I am in input");
         @SuppressWarnings("resource")
 		Scanner sc= new Scanner(System.in); //System.in is a standard input stream
         String str= sc.nextLine();              //reads string
@@ -186,33 +185,38 @@ public class Main {
     }
     // ----------------------------------------------------------
 
-    public static void assign(String one, String two){
-    	String[] arg2 = two.split(" ");
-    	
-		String varName = ""; 
-    	String data = "";
-        if(one.equals("readFile"))
-        {
-        	varName = readFile(arg2[0]);
-        	arg2[0] = "";
-        	two = Arrays.toString(arg2);
-        }
-        else
-        	varName = one;
-        
-        if(two.contains("readFile"))
-        {
-        	arg2 = two.split(" ");
-        	data = readFile(arg2[1]);
-        }
-        else
-        	data = two;
-        
-        if(variables.containsKey(varName))
-        	variables.replace(varName, data);
-        else
-        	variables.put(varName, data);
-    }
+    public static void assign(String one, String two) {
+		String[] arg2 = two.split(" ");
+		
+		String varName = "";
+		String dataString = "";
+		if (one.contains("readFile")) {
+			arg2 = one.split(" ");
+			if(variables.containsKey(arg2[1]))
+				varName = readFile((String)variables.get(arg2[1]));
+			else
+				varName = readFile((arg2[1]));
+		} else
+			varName = one;
+
+		if (two.contains("readFile")) {
+			arg2 = two.split(" ");
+
+			if(variables.containsKey(arg2[1]))
+				dataString = readFile((String)variables.get(arg2[1]));
+			else
+				dataString = readFile((arg2[1]));
+			
+		} else
+			dataString = two;
+
+
+		if (variables.containsKey(varName))
+			variables.replace(varName, dataString);
+		else
+			variables.put(varName, dataString);
+	}
+
 
     public static void print(String statement){
         if(variables.containsKey(statement))
@@ -227,23 +231,28 @@ public class Main {
 
 
     public static void add(String first, String second ){
-   		int a = Integer.parseInt(variables.get(first));
-    	int b = Integer.parseInt(variables.get(second));
+   		int a = Integer.parseInt((String) variables.get(first));
+    	int b = Integer.parseInt((String) variables.get(second));
     	int res = a + b;
     	String ress = ""+res;
         variables.replace(first, ress);
     }
 
-    public static void writeFile(String write,String fileLocation ) throws IOException{
-        File f = new File(fileLocation+".txt");
+    public static void writeFile(String fileName,String data ) throws IOException{
+    	if(variables.containsKey(fileName))
+            fileName = (String) variables.get(fileName);
+    	if(variables.containsKey(data))
+            data = (String) variables.get(data);
+    	
+        File f = new File(fileName);
         FileWriter writer = new FileWriter(f);
         if(f.exists()) {
-        	writer.write(write);
+        	writer.write(data);
         	writer.close();
         }
         else {
         	f.createNewFile();
-        	writer.write(write);
+        	writer.write(data);
         	writer.close();
         }
   
