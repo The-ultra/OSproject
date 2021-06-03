@@ -170,22 +170,7 @@ public class Main {
 
 
 
-    public static void print(String text){
-    if(text.length()>0) {
-    	System.out.println(text);
-    }
-    else {
-    	Enumeration<String> enumeration = variables.keys();
-    	while(enumeration.hasMoreElements()) {
-    		String key = enumeration.nextElement();
-    		if(key.equals(text)) {
-    			System.out.println(variables.get(key));
-    		}
-    	}
-    	
-    }
-    System.out.println(text);
-    }
+  
 
 
     public static String input(){
@@ -229,7 +214,12 @@ public class Main {
         	variables.put(varName, data);
     }
 
-
+    public static void print(String statement){
+        if(variables.containsKey(statement))
+            System.out.println(variables.get(statement));
+        else
+            System.out.println(statement);
+    }
 
 
 
@@ -237,10 +227,11 @@ public class Main {
 
 
     public static void add(String first, String second ){
-       int a = Integer.parseInt(first);
-       int b = Integer.parseInt(second);
-       int res = a + b;
-       
+   		int a = Integer.parseInt(variables.get(first));
+    	int b = Integer.parseInt(variables.get(second));
+    	int res = a + b;
+    	String ress = ""+res;
+        variables.replace(first, ress);
     }
 
     public static void writeFile(String write,String fileLocation ) throws IOException{
