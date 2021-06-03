@@ -6,10 +6,12 @@ import java.util.Scanner;
 
 public class Main {
 	static Hashtable<String, String> variables = new Hashtable<String, String>();
-
-
+	
+	 static String a = "";
+	 static String b = "";
+	
     public static void main(String[]Args){
-            parser("Program 1.txt");
+            parser("C:/Users/elaya/java/OSproject/Milestone1/Program 2.txt");
 
     }
     public static void parser(String filename) {
@@ -37,7 +39,7 @@ public class Main {
             System.out.print("end of lines");
         }
     }
-        public static void parsing(String[] parts){
+        public static void parsing(String[] parts) throws IOException{
 
         switch (parts[0]) {
 
@@ -168,7 +170,12 @@ public class Main {
 
 
     public static void print(String text){
-    System.out.println("I am in print");
+    if(text=="a") {
+    	System.out.println(a);
+    }
+    if(text=="b") {
+    	System.out.println(b);
+    }
     System.out.println(text);
     }
 
@@ -226,18 +233,42 @@ public class Main {
 
     }
 
-    public static void writeFile(String write,String fileLocation ){
-        System.out.println("I am in writeFile");
+    public static void writeFile(String write,String fileLocation ) throws IOException{
+        File f = new File(fileLocation+".txt");
+        FileWriter writer = new FileWriter(f);
+        if(f.exists()) {
+        	writer.write(write);
+        	writer.close();
+        }
+        else {
+        	f.createNewFile();
+        	writer.write(write);
+        	writer.close();
+        }
 
     }
 
     public static String readFile(String filename){
-        System.out.println("I am in readFile");
-        return null; //placeholder for assign
+    	String res = "";
+    	try {
+    		File f = new File(filename);
+    		if(f.exists()) {
+    			BufferedReader b = new BufferedReader(new FileReader(f));
+    			b.close();
+    			res= b.toString();
+    		}
+    		else {
+    			throw new FileNotFoundException();
+    		}
+    		
+    	}catch(Exception e) {
+    		System.out.println(e);
+    	}
+    	return res;
     }
 
     // ----------------------------------------------------------
-
+    
 
 
 
