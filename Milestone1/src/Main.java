@@ -10,10 +10,7 @@ public class Main {
 
 	
     public static void main(String[]Args){
-    		parser("Program 1.txt");
-            parser("Program 2.txt");
-            parser("Program 3.txt");
-
+		parser("Program 1.txt");
     }
     public static void parser(String filename) {
 
@@ -52,6 +49,7 @@ public class Main {
                     break;
 
                 } else if (parts[1].equals("input") && !parts[2].equals("input")) {
+                	
                     String addString = "";
                     for (int x = 2; x < parts.length; x++) {
                         addString = addString + " " + parts[x];
@@ -60,10 +58,11 @@ public class Main {
                     break;
 
                 } else if (!parts[1].equals("input") && parts[2].equals("input")) {
+                	
                     add(parts[1], input());
                     break;
                 } else {
-
+                	
                     String addString = "";
                     for (int x = 2; x < parts.length; x++) {
                         addString = addString + parts[x];
@@ -78,9 +77,11 @@ public class Main {
             case "writeFile":
 
                 if (parts[1].equals("input") && parts[2].equals("input")) {
+                	
                     writeFile(input(), input());
                     break;
                 } else if (parts[1].equals("input") && !parts[2].equals("input")) {
+                	
                     String writestring = "";
                     for (int x = 2; x < parts.length; x++) {
                         writestring = writestring + " " + parts[x];
@@ -91,7 +92,7 @@ public class Main {
                     writeFile(parts[1], input());
                     break;
                 } else {
-
+                	System.out.println("i am here");
                     String writestring = "";
                     for (int x = 2; x < parts.length; x++) {
                         writestring = writestring + parts[x];
@@ -140,7 +141,7 @@ public class Main {
 
                     String assignstring = "";
                     for (int x = 2; x < parts.length; x++) {
-                        assignstring = assignstring+parts[x] +" " ;
+                        assignstring = assignstring + parts[x];
                     }
                     assign(parts[1], assignstring);
 
@@ -185,38 +186,33 @@ public class Main {
     }
     // ----------------------------------------------------------
 
-    public static void assign(String one, String two) {
-		String[] arg2 = two.split(" ");
-		
-		String varName = "";
-		String dataString = "";
-		if (one.contains("readFile")) {
-			arg2 = one.split(" ");
-			if(variables.containsKey(arg2[1]))
-				varName = readFile((String)variables.get(arg2[1]));
-			else
-				varName = readFile((arg2[1]));
-		} else
-			varName = one;
-
-		if (two.contains("readFile")) {
-			arg2 = two.split(" ");
-
-			if(variables.containsKey(arg2[1]))
-				dataString = readFile((String)variables.get(arg2[1]));
-			else
-				dataString = readFile((arg2[1]));
-			
-		} else
-			dataString = two;
-
-
-		if (variables.containsKey(varName))
-			variables.replace(varName, dataString);
-		else
-			variables.put(varName, dataString);
-	}
-
+    public static void assign(String one, String two){
+    	String[] arg2 = two.split(" ");
+    	
+		String varName = ""; 
+    	String data = "";
+        if(one.equals("readFile"))
+        {
+        	varName = readFile(arg2[0]);
+        	arg2[0] = "";
+        	two = Arrays.toString(arg2);
+        }
+        else
+        	varName = one;
+        
+        if(two.contains("readFile"))
+        {
+        	arg2 = two.split(" ");
+        	data = readFile(arg2[1]);
+        }
+        else
+        	data = two;
+        
+        if(variables.containsKey(varName))
+        	variables.replace(varName, data);
+        else
+        	variables.put(varName, data);
+    }
 
     public static void print(String statement){
         if(variables.containsKey(statement))
@@ -238,21 +234,20 @@ public class Main {
         variables.replace(first, ress);
     }
 
-    public static void writeFile(String fileName,String data ) throws IOException{
-    	if(variables.containsKey(fileName))
-            fileName = (String) variables.get(fileName);
-    	if(variables.containsKey(data))
-            data = (String) variables.get(data);
-    	
-        File f = new File(fileName);
+    public static void writeFile(String fileName,String write ) throws IOException{
+    	fileName = (String)variables.get(fileName);
+    	write = (String)variables.get(write);
+    	System.out.println(fileName);
+    	System.out.println(write);
+    	File f = new File(fileName+".txt");
         FileWriter writer = new FileWriter(f);
         if(f.exists()) {
-        	writer.write(data);
+        	writer.write(write);
         	writer.close();
         }
         else {
         	f.createNewFile();
-        	writer.write(data);
+        	writer.write(write);
         	writer.close();
         }
   
