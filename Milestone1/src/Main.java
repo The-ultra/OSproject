@@ -7,8 +7,8 @@ import java.util.Scanner;
 public class Main {
 	static Hashtable<String, String> variables = new Hashtable<String, String>();
 	
-	 static String a = "";
-	 static String b = "";
+	 //static String a = "";
+	 //static String b = "";
 	
     public static void main(String[]Args){
             parser("C:/Users/elaya/java/OSproject/Milestone1/Program 2.txt");
@@ -229,8 +229,10 @@ public class Main {
 
 
     public static void add(String first, String second ){
-        System.out.println("I am in add");
-
+       int a = Integer.parseInt(first);
+       int b = Integer.parseInt(second);
+       int res = a + b;
+       
     }
 
     public static void writeFile(String write,String fileLocation ) throws IOException{
@@ -245,7 +247,7 @@ public class Main {
         	writer.write(write);
         	writer.close();
         }
-
+  
     }
 
     public static String readFile(String filename){
@@ -254,8 +256,11 @@ public class Main {
     		File f = new File(filename);
     		if(f.exists()) {
     			BufferedReader b = new BufferedReader(new FileReader(f));
-    			b.close();
-    			res= b.toString();
+    			String reader = b.readLine();
+    			while(reader!=null) {
+    				res = res+reader;
+    				reader = b.readLine();
+    			}
     		}
     		else {
     			throw new FileNotFoundException();
