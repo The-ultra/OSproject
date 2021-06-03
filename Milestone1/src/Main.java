@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Scanner;
 
@@ -170,11 +171,18 @@ public class Main {
 
 
     public static void print(String text){
-    if(text=="a") {
-    	System.out.println(a);
+    if(text.length()>0) {
+    	System.out.println(text);
     }
-    if(text=="b") {
-    	System.out.println(b);
+    else {
+    	Enumeration<String> enumeration = variables.keys();
+    	while(enumeration.hasMoreElements()) {
+    		String key = enumeration.nextElement();
+    		if(key.equals(text)) {
+    			System.out.println(variables.get(key));
+    		}
+    	}
+    	
     }
     System.out.println(text);
     }
