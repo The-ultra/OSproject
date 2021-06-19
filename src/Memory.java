@@ -16,7 +16,7 @@ public class Memory {
 		}
 	}
 	
-	public MemoryBlock getblock(int indx) {
+	public MemoryBlock getBlock(int indx) {
 		// TODO Auto-generated method stub
 		return memory[indx];
 	}
