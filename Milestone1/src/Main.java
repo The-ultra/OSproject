@@ -5,12 +5,12 @@ import java.util.Scanner;
 
 
 public class Main {
-	static Hashtable<String, String> variables = new Hashtable<String, String>();
+	static Hashtable<String, Object> variables = new Hashtable<String, Object>();
+	
 
-
+	
     public static void main(String[]Args){
-            parser("Program 1.txt");
-
+		parser("Program 1.txt");
     }
     public static void parser(String filename) {
 
@@ -37,7 +37,7 @@ public class Main {
             System.out.print("end of lines");
         }
     }
-        public static void parsing(String[] parts){
+        public static void parsing(String[] parts) throws IOException{
 
         switch (parts[0]) {
 
@@ -49,6 +49,7 @@ public class Main {
                     break;
 
                 } else if (parts[1].equals("input") && !parts[2].equals("input")) {
+                	
                     String addString = "";
                     for (int x = 2; x < parts.length; x++) {
                         addString = addString + " " + parts[x];
@@ -57,10 +58,11 @@ public class Main {
                     break;
 
                 } else if (!parts[1].equals("input") && parts[2].equals("input")) {
+                	
                     add(parts[1], input());
                     break;
                 } else {
-
+                	
                     String addString = "";
                     for (int x = 2; x < parts.length; x++) {
                         addString = addString + parts[x];
@@ -75,9 +77,11 @@ public class Main {
             case "writeFile":
 
                 if (parts[1].equals("input") && parts[2].equals("input")) {
+                	
                     writeFile(input(), input());
                     break;
                 } else if (parts[1].equals("input") && !parts[2].equals("input")) {
+                	
                     String writestring = "";
                     for (int x = 2; x < parts.length; x++) {
                         writestring = writestring + " " + parts[x];
@@ -88,7 +92,7 @@ public class Main {
                     writeFile(parts[1], input());
                     break;
                 } else {
-
+                	System.out.println("i am here");
                     String writestring = "";
                     for (int x = 2; x < parts.length; x++) {
                         writestring = writestring + parts[x];
@@ -167,14 +171,10 @@ public class Main {
 
 
 
-    public static void print(String text){
-    System.out.println("I am in print");
-    System.out.println(text);
-    }
+  
 
 
     public static String input(){
-        System.out.println("I am in input");
         @SuppressWarnings("resource")
 		Scanner sc= new Scanner(System.in); //System.in is a standard input stream
         String str= sc.nextLine();              //reads string
@@ -214,7 +214,12 @@ public class Main {
         	variables.put(varName, data);
     }
 
-
+    public static void print(String statement){
+        if(variables.containsKey(statement))
+            System.out.println(variables.get(statement));
+        else
+            System.out.println(statement);
+    }
 
 
 
@@ -222,22 +227,56 @@ public class Main {
 
 
     public static void add(String first, String second ){
-        System.out.println("I am in add");
-
+   		int a = Integer.parseInt((String) variables.get(first));
+    	int b = Integer.parseInt((String) variables.get(second));
+    	int res = a + b;
+    	String ress = ""+res;
+        variables.replace(first, ress);
     }
 
-    public static void writeFile(String write,String fileLocation ){
-        System.out.println("I am in writeFile");
-
+    public static void writeFile(String fileName,String write ) throws IOException{
+    	fileName = (String)variables.get(fileName);
+    	write = (String)variables.get(write);
+    	System.out.println(fileName);
+    	System.out.println(write);
+    	File f = new File(fileName+".txt");
+        FileWriter writer = new FileWriter(f);
+        if(f.exists()) {
+        	writer.write(write);
+        	writer.close();
+        }
+        else {
+        	f.createNewFile();
+        	writer.write(write);
+        	writer.close();
+        }
+  
     }
 
     public static String readFile(String filename){
-        System.out.println("I am in readFile");
-        return null; //placeholder for assign
+    	String res = "";
+    	try {
+    		File f = new File(filename);
+    		if(f.exists()) {
+    			BufferedReader b = new BufferedReader(new FileReader(f));
+    			String reader = b.readLine();
+    			while(reader!=null) {
+    				res = res+reader;
+    				reader = b.readLine();
+    			}
+    		}
+    		else {
+    			throw new FileNotFoundException();
+    		}
+    		
+    	}catch(Exception e) {
+    		System.out.println(e);
+    	}
+    	return res;
     }
 
     // ----------------------------------------------------------
-
+    
 
 
 
