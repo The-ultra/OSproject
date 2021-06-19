@@ -1,4 +1,8 @@
 /Main.class
+/Memory.class
+/MemoryBlock.class
 /PCB.class
-/PCB$process_status.class
+/ProcessState.class
+/Word.class
 /process_status.class
+/scheduler.class
