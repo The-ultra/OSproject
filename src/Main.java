@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Scanner;
@@ -15,6 +16,61 @@ public class Main {
             parser("Program 3.txt");
 
     }
+    
+    
+	
+	public static void scheduler(ArrayList<MemoryBlock> procList) throws IOException {
+		while(!procList.isEmpty()) {
+			for(int procCount =0; procCount<procList.size();procCount++ ) { //loop on processes
+				
+				MemoryBlock thisPCB = procList.get(procCount);
+				String thisInstuctionString = thisPCB.getInstruction();
+			
+	               
+				procList.get(procCount).setState(ProcessState.Running);
+	                for(int instructionCount = 0; instructionCount<2;instructionCount++ ) { //two instructions
+	                	 
+	                	if(thisPCB != null) {
+	                	
+	            	   String[] parts = thisInstuctionString.split(" ");
+	            	   
+	               Main.parsing(parts);
+	               
+	               thisPCB.incrementPc();
+	               
+	               }else
+	            	   
+	            	   	procList.get(procCount).setState(ProcessState.Finished);
+	            	   	procList.remove(procCount);
+	               
+	               
+	               
+	               
+	               
+	               
+	               }
+	                if(procList.get(procCount) != null) {
+	                procList.get(procCount).setState(ProcessState.NotRunning);
+	                }
+	                
+	                
+	                
+			}
+		
+		
+		
+		}
+		}
+    
+    
+    
+    
+  
+  
+    
+    
+    
+    
     public static void parser(String filename) {
 
 
