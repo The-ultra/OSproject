@@ -23,11 +23,12 @@ public class Main {
 		while(!procList.isEmpty()) {
 			for(int procCount =0; procCount<procList.size();procCount++ ) { //loop on processes
 				
+				
 				MemoryBlock thisPCB = procList.get(procCount);
 				String thisInstuctionString = thisPCB.getInstruction();
 			
 	               
-				procList.get(procCount).setState(ProcessState.Running);
+				thisPCB.setState(ProcessState.Running);
 	                for(int instructionCount = 0; instructionCount<2;instructionCount++ ) { //two instructions
 	                	 
 	                	if(thisPCB != null) {
@@ -49,8 +50,9 @@ public class Main {
 	               
 	               
 	               }
-	                if(procList.get(procCount) != null) {
-	                procList.get(procCount).setState(ProcessState.NotRunning);
+	                if(thisPCB != null) {
+	                	
+	                thisPCB.setState(ProcessState.NotRunning);
 	                }
 	                
 	                
