@@ -52,8 +52,15 @@ public class MemoryBlock
 	{
 		try {
 			if(varPointer <100) {
-				block[varPointer] = new Word(varName, data);
-				varPointer++;
+				boolean flag = false;
+				for (int i = 50; i < varPointer; i++) 
+					if(block[i].key.equals(varName)) {
+						 block[i] = new Word(varName, data);
+						 flag = true;
+					}
+				if(!flag) {
+					block[varPointer] = new Word(varName, data);
+					varPointer++;}
 			}
 			else
 				throw new Exception();
