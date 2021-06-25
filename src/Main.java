@@ -10,9 +10,28 @@ public class Main {
 
 	
     public static void main(String[]Args){
-    		parser("Program 1.txt");
-            parser("Program 2.txt");
-            parser("Program 3.txt");
+    		public static void main(String[] Args) {
+		String[] processes = new String[] { "Process 1.txt", "Process 2.txt", "Process 3.txt" };
+		ArrayList<Integer> memoryIndex = new ArrayList<Integer>();
+
+		for (int i = 0; i < processes.length; i++) {
+			try {
+				FileInputStream fis = new FileInputStream(processes[i]);
+				Scanner sc = new Scanner(fis);
+				mem.addProcess((int)(Math.random()*10000)+1);
+				MemoryBlock block = mem.getBlock(i);
+				memoryIndex.add(i);
+				while (sc.hasNextLine()) 
+					block.addInstruction(sc.nextLine());
+				sc.close(); // closes the scanner
+			} catch (IOException e) {
+				System.out.print("Program does not exist");
+			}
+		}
+		
+		scheduler(memoryIndex);
+
+	}
 
     }
     public static void parser(String filename) {
