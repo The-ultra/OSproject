@@ -84,6 +84,15 @@ public class MemoryBlock
 		return null;
 	}
 	
+	public boolean contains(String varName)
+	{
+		for (int i = 50; i < varPointer; i++) 
+			if(block[varPointer].key.equals(varName))
+				return true;
+		return false;
+		
+	}
+	
 	public void addInstruction(String instruction)
 	{
 		try {
